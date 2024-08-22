@@ -1,0 +1,6 @@
+name=The Alcoholic [ AUTO DRINK ]
+poster=poster.png
+icon=icon.png
+id=thealcoholic_autodrink
+description=Auto-drink alcoholic beverages.
+require=thealcoholic
