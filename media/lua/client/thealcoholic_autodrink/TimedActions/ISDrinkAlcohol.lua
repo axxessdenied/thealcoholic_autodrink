@@ -9,8 +9,6 @@ local eat_new = ISEatFoodAction.new
 
 function ISDrinkAlcohol:perform()
     eat_perform(self)
-
-    -- todo: custom stuff here
 end
 
 function ISDrinkAlcohol:new(character, item, percentage)

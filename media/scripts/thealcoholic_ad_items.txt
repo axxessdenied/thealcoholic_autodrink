@@ -1,0 +1,83 @@
+module TheAlcoholic {
+    imports {
+        Base
+    }
+	item FlaskEmpty {
+		DisplayCategory = WaterContainer,
+		Weight = 0.2,
+		CanStoreWater = TRUE,
+		DisplayName = Empty Flask,
+		ReplaceOnUseOn = WaterSource-FlaskWaterFull,
+		Icon = VodkaBottle,
+		StaticModel = VodkaBottle,
+		WorldStaticModel = WhiskeyBottleGround,
+		Tags = EmptyPetrol,
+		ReplaceTypes = PetrolSource FlaskPetrol;WaterSource FlaskWaterFull,
+	}
+
+    item FlaskWaterFull
+	{
+		DisplayName = Water Bottle,
+		DisplayCategory = Water,
+		Type = Drainable,
+		Weight = 0.7,
+		Icon = Whiskey_Water_Full,
+		CanStoreWater = TRUE,
+		EatType = Bourbon,
+		FillFromDispenserSound = GetWaterFromDispenserGlass,
+		FillFromTapSound = GetWaterFromTapGlass,
+		IsCookable = TRUE,
+		IsWaterSource = TRUE,
+		ReplaceOnDeplete = FlaskEmpty,
+		ReplaceOnUseOn = WaterSource-FlaskWaterFull,
+		UseDelta = 0.08,
+		UseWhileEquipped = FALSE,
+		CustomEatSound = DrinkingFromBottleGlass,
+		StaticModel = WhiskeyBottle,
+		WorldStaticModel = WhiskeyBottleGround,
+	}
+
+    item FlaskFull
+	{
+		DisplayName = Flask of Alcohol,
+		DisplayCategory = Food,
+		Type = Food,
+		Weight = 0.7,
+		Icon = WhiskeyFull,
+		EvolvedRecipe = Beverage:4;Beverage2:4;HotDrink:4;HotDrinkRed:4;HotDrinkWhite:4;HotDrinkSpiffo:4;HotDrinkTea:4, /*;Soup:4;Stew:4,*/
+		FoodType = Liquor,
+		AlcoholPower = 2,
+		Alcoholic = TRUE,
+		CantBeFrozen = TRUE,
+		EatType = Bourbon,
+		Packaged = TRUE,
+		ReplaceOnUse = FlaskEmpty,
+		HungerChange = -20,
+		ThirstChange = -20,
+		UnhappyChange = -10,
+		Calories = 1500,
+		Carbohydrates = 0,
+		Lipids = 0,
+		Proteins = 0,
+		CustomContextMenu = Drink,
+		CustomEatSound = DrinkingFromBottleGlass,
+		StaticModel = WhiskeyBottle,
+		WorldStaticModel = WhiskeyBottleGround,
+		Tags = Liquor,
+	}
+
+    item FlaskPetrol
+	{
+		DisplayCategory = VehicleMaintenance,
+		Weight	=	0.7,
+		Type	=	Drainable,
+		UseWhileEquipped	=	FALSE,
+		UseDelta	=	1,
+		DisplayName	=	Bottle of Gasoline,
+		Icon	=	WhiskeyBottleGas,
+		ReplaceOnDeplete	=	FlaskEmpty,
+		StaticModel = WhiskeyBottleGasoline,
+		WorldStaticModel = WhiskeyBottleGroundGasoline,
+		Tags = Petrol,
+	}	
+}
