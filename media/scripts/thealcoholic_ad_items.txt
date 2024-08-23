@@ -8,8 +8,8 @@ module TheAlcoholic {
 		CanStoreWater = TRUE,
 		DisplayName = Empty Flask,
 		ReplaceOnUseOn = WaterSource-FlaskWaterFull,
-		Icon = VodkaBottle,
-		StaticModel = VodkaBottle,
+		Icon = WhiskeyEmpty,
+		StaticModel = WhiskeyEmpty,
 		WorldStaticModel = WhiskeyBottleGround,
 		Tags = EmptyPetrol,
 		ReplaceTypes = PetrolSource FlaskPetrol;WaterSource FlaskWaterFull,
@@ -20,7 +20,7 @@ module TheAlcoholic {
 		DisplayName = Water Bottle,
 		DisplayCategory = Water,
 		Type = Drainable,
-		Weight = 0.7,
+		Weight = 1,
 		Icon = Whiskey_Water_Full,
 		CanStoreWater = TRUE,
 		EatType = Bourbon,
@@ -37,12 +37,12 @@ module TheAlcoholic {
 		WorldStaticModel = WhiskeyBottleGround,
 	}
 
-    item FlaskFull
+    item FlaskWhiskeyFull
 	{
-		DisplayName = Flask of Alcohol,
+		DisplayName = Flask of Whiskey,
 		DisplayCategory = Food,
 		Type = Food,
-		Weight = 0.7,
+		Weight = 1,
 		Icon = WhiskeyFull,
 		EvolvedRecipe = Beverage:4;Beverage2:4;HotDrink:4;HotDrinkRed:4;HotDrinkWhite:4;HotDrinkSpiffo:4;HotDrinkTea:4, /*;Soup:4;Stew:4,*/
 		FoodType = Liquor,
@@ -65,6 +65,63 @@ module TheAlcoholic {
 		WorldStaticModel = WhiskeyBottleGround,
 		Tags = Liquor,
 	}
+
+	item FlaskWineFull
+	{
+		DisplayName = Flask of Chardonnay,
+		DisplayCategory = Food,
+		Type = Food,
+		Weight = 1,
+		Icon = WineFull,
+		/*EvolvedRecipe = Beverage:4;Beverage2:4;Soup:4;Stew:4;PastaPot:4;PastaPan:4;WineInGlass:4,*/
+		EvolvedRecipe = Beverage:4;Beverage2:4;WineInGlass:4;PastaPot:4;PastaPan:4,
+		FoodType = Wine,
+		Alcoholic = TRUE,
+		CantBeFrozen = TRUE,
+		EatType = Bourbon,
+		Packaged = TRUE,
+		ReplaceOnUse = FlaskEmpty,
+		HungerChange = -20,
+		ThirstChange = -20,
+		UnhappyChange = -20,
+		Calories = 481,
+		Carbohydrates = 0,
+		Lipids = 0,
+		Proteins = 0,
+		CustomContextMenu = Drink,
+		CustomEatSound = DrinkingFromBottleGlass,
+		StaticModel = WhiteWineBottle,
+		WorldStaticModel = WineWhiteGround,
+	}
+
+	item FlaskWine2Full
+	{
+		DisplayName = Flask of Red Wine,
+		DisplayCategory = Food,
+		Type = Food,
+		Weight = 1,
+		Icon = Wine2Full,
+		EvolvedRecipe = Beverage:4;Beverage2:4;HotDrink:4;HotDrinkRed:4;HotDrinkWhite:4;HotDrinkSpiffo:4;HotDrinkTea:4;WineInGlass:4;PastaPot:4;PastaPan:4,
+		/*EvolvedRecipe = Beverage:4;Beverage2:4;HotDrink:4;HotDrinkRed:4;HotDrinkWhite:4;HotDrinkSpiffo:4;HotDrinkTea:4;Soup:4;Stew:4;PastaPot:4;PastaPan:4;WineInGlass:4,*/
+		FoodType = Wine,
+		Alcoholic = TRUE,
+		CantBeFrozen = TRUE,
+		EatType = Bourbon,
+		Packaged = TRUE,
+		ReplaceOnUse = FlaskEmpty,
+		HungerChange = -20,
+		ThirstChange = -20,
+		UnhappyChange = -20,
+		Calories = 510,
+		Carbohydrates = 0,
+		Lipids = 0,
+		Proteins = 0,
+		CustomContextMenu = Drink,
+		CustomEatSound = DrinkingFromBottleGlass,
+		StaticModel = RedWineBottle,
+		WorldStaticModel = WineRedGround,
+	}
+
 
     item FlaskPetrol
 	{

@@ -1,0 +1,35 @@
+module TheAlcoholic {
+    imports {
+        Base
+    }
+
+    recipe Fill Flask {
+		FlaskEmpty,
+		WhiskeyFull,
+        
+		Result:FlaskWhiskeyFull,
+		Time:100.0,
+		Category:Cooking,
+		OnGiveXP:Recipe.OnGiveXP.Cooking10,
+	}
+
+    recipe Fill Flask {
+		FlaskEmpty,
+		Wine,
+        
+		Result:FlaskWineFull,
+		Time:100.0,
+		Category:Cooking,
+		OnGiveXP:Recipe.OnGiveXP.Cooking10,
+	}
+
+    recipe Fill Flask {
+		FlaskEmpty,
+		Wine2,
+        
+		Result:FlaskWine2Full,
+		Time:100.0,
+		Category:Cooking,
+		OnGiveXP:Recipe.OnGiveXP.Cooking10,
+	}
+}
