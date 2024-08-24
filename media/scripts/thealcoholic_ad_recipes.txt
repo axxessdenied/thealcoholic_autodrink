@@ -9,8 +9,8 @@ module TheAlcoholic {
         
 		Result:FlaskWhiskeyFull,
 		Time:100.0,
-		Category:Cooking,
-		OnGiveXP:Recipe.OnGiveXP.Cooking10,
+		Category:TheAlcoholic,
+		OnCreate:TheAlcoholic.AutoDrink.onCreateFlaskWhiskey,
 	}
 
     recipe Fill Flask {
@@ -19,8 +19,8 @@ module TheAlcoholic {
         
 		Result:FlaskWineFull,
 		Time:100.0,
-		Category:Cooking,
-		OnGiveXP:Recipe.OnGiveXP.Cooking10,
+		Category:TheAlcoholic,
+		OnCreate:TheAlcoholic.AutoDrink.onCreateFlaskWine,
 	}
 
     recipe Fill Flask {
@@ -29,7 +29,7 @@ module TheAlcoholic {
         
 		Result:FlaskWine2Full,
 		Time:100.0,
-		Category:Cooking,
-		OnGiveXP:Recipe.OnGiveXP.Cooking10,
+		Category:TheAlcoholic,
+		OnCreate:TheAlcoholic.AutoDrink.onCreateFlaskWine2,
 	}
 }

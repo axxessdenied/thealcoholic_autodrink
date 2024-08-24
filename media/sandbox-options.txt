@@ -1,0 +1,52 @@
+VERSION = 1,
+
+option thealcoholicautodrink.autosmoke = {
+    type = boolean,
+    default = true,
+    page = thealcoholicautodrink,
+    translation = thealcoholicautodrink_autosmoke,
+}
+
+option thealcoholicautodrink.only_stressed = {
+    type = boolean,
+    default = false,
+    page = thealcoholicautodrink,
+    translation = thealcoholicautodrink_only_stressed,
+}
+
+option thealcoholicautodrink.drink_interval = {
+    type = integer,
+    min = 1,
+    max = 24,
+    default = 1,
+    page = thealcoholicautodrink,
+    translation = thealcoholicautodrink_drink_interval,
+}
+
+option thealcoholicautodrink.drink_percentage = {
+    type = double,
+    min = 0.01,
+    max = 1.0,
+    default = 0.1,
+    page = thealcoholicautodrink,
+    translation = thealcoholicautodrink_drink_percentage,
+    tooltip = thealcoholicautodrink_drink_percentage_tooltip,
+}
+
+option thealcoholicautodrink.spawn_flask = {
+    type = boolean,
+    default = false,
+    page = thealcoholicautodrink,
+    translation = thealcoholicautodrink_spawn_flask,
+    tooltip = thealcoholicautodrink_spawn_flask_tooltip,
+}
+
+option thealcoholicautodrink.spawn_chance = {
+    type = integer,
+    min = 1,
+    max = 1000,
+    default = 4,
+    page = thealcoholicautodrink,
+    translation = thealcoholicautodrink_spawn_chance,
+    tooltip = thealcoholicautodrink_spawn_chance_tooltip,
+}

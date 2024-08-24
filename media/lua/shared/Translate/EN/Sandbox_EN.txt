@@ -1,0 +1,13 @@
+Sandbox_EN = {
+    Sandbox_thealcoholicautodrink = "TheAlcoholic - Auto Drink",
+    Sandbox_thealcoholicautodrink_autosmoke = "AutoSmoke support",
+    Sandbox_thealcoholicautodrink_autosmoke_tooltip = "You can leave this enabled even if you don't have the mod",
+    Sandbox_thealcoholicautodrink_only_stressed = "Auto Drink Only When Stressed",
+    Sandbox_thealcoholicautodrink_drink_interval = "Time Between Drinks in Hours",
+    Sandbox_thealcoholicautodrink_drink_percentage = "Drink Percentage",
+    Sandbox_thealcoholicautodrink_drink_percentage_tooltip = "Percentage of the flask consumed per sip [0-1]",
+    Sandbox_thealcoholicautodrink_spawn_flask = "Player spawns with an empty flask",
+    Sandbox_thealcoholicautodrink_spawn_flask_tooltip = "Player must have Alcoholic trait.",
+    Sandbox_thealcoholicautodrink_spawn_chance = "Chance to spawn flask",
+    Sandbox_thealcoholicautodrink_spawn_chance_tooltip = "1 = 100% chance. Lower value = higher chance. Default is 25%",
+}
