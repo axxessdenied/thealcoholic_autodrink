@@ -1,6 +1,7 @@
 TheAlcoholic.AutoDrink = TheAlcoholic.AutoDrink or {}
 
 function TheAlcoholic.AutoDrink.onInitModData()
+    --[[
     TheAlcoholic.AutoDrink.values = {
         onlyStressed = getSandboxOptions():getOptionByName("thealcoholicautodrink.only_stressed"):getValue(),
         drinkInterval = getSandboxOptions():getOptionByName("thealcoholicautodrink.drink_interval"):getValue(),
@@ -10,6 +11,8 @@ function TheAlcoholic.AutoDrink.onInitModData()
         spawnFlask = getSandboxOptions():getOptionByName("thealcoholicautodrink.spawn_flask"):getValue(),
         spawnFlaskChance = getSandboxOptions():getOptionByName("thealcoholicautodrink.spawn_chance"):getValue(),
     }
+    ]]
+    TheAlcoholic.AutoDrink.sBVars = SandboxVars.TheAlcoholicAutoDrink
 end
 
 Events.OnInitGlobalModData.Add(TheAlcoholic.AutoDrink.onInitModData)

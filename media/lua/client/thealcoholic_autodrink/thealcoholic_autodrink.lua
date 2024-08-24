@@ -3,27 +3,26 @@
 TheAlcoholic.AutoDrink.activePlayer = nil
 TheAlcoholic.AutoDrink.supportedMods = {}
 
+local sBVars = TheAlcoholic.AutoDrink.sBVars
+local stressThreshold = 0
+
 function TheAlcoholic.AutoDrink.onStart()
     --AUTOSMOKE SUPPORT
-    if AutoSmoke ~= nil and TheAlcoholic.AutoDrink.values.AutoSmoke == true
+    if AutoSmoke ~= nil and sBVars.AutoSmoke == true
     then
         TheAlcoholic.AutoDrink.supportedMods["AutoSmoke"] = true
     else 
         TheAlcoholic.AutoDrink.supportedMods["AutoSmoke"] = false
     end
-    TheAlcoholic.AutoDrink.values.stressThreshold = TheAlcoholic.values.stress_per_drink[TheAlcoholic.options.stress_per_drink] - 0.02
-    if TheAlcoholic.AutoDrink.values.spawnFlaskChance == nil
-    then --value of 0 in the options menu is nil here
-        TheAlcoholic.AutoDrink.values.spawnFlaskChance = 0
-    end
+    stressThreshold = TheAlcoholic.values.stress_per_drink[TheAlcoholic.options.stress_per_drink] - 0.02
 end
 
 function TheAlcoholic.AutoDrink.onCreatePlayer(playerNum, character)
     local player = getSpecificPlayer(playerNum)
 
-    if TheAlcoholic.AutoDrink.values.spawnFlask == true and player:HasTrait("Alcoholic")
+    if sBVars.PlayerSpawnFlask == true and player:HasTrait("Alcoholic")
     then
-        if ZombRand(TheAlcoholic.AutoDrink.values.spawnFlaskChance - 1) == 0
+        if ZombRand(sBVars.PlayerSpawnFlaskChance - 1) == 0
         then
             player:getInventory():AddItem("TheAlcoholic.FlaskEmpty")
         end
@@ -61,14 +60,6 @@ function TheAlcoholic.AutoDrink.onStressCheck()
     stressCheckTs = getTimestampMs() + stressCheckDelta / multiplier
     prevMultipler = multiplier
 
-    if TheAlcoholic.options.debugmode 
-    then
-        print("AutoDrink: onStressCheck")
-        print("AutoDrink: stressThreshold: " .. TheAlcoholic.AutoDrink.values.stressThreshold)
-        print("AutoDrink - AutoSmoke support: " .. tostring(TheAlcoholic.AutoDrink.supportedMods["AutoSmoke"]))
-        print("AutoDrink: percentageConsumed: " .. TheAlcoholic.AutoDrink.values.percentageConsumed)
-    end
-
     -- iterate through each player
     for i=0, getNumActivePlayers() - 1 do
         TheAlcoholic.AutoDrink.activePlayer = getSpecificPlayer(i)
@@ -78,10 +69,13 @@ function TheAlcoholic.AutoDrink.onStressCheck()
         if player:isAsleep() then break end
         if player:HasTrait("Alcoholic") == false then break end
 
-        if player:getModData().AlcoholicTimeSinceLastDrink > TheAlcoholic.AutoDrink.values.drinkInterval and TheAlcoholic.AutoDrink.values.onlyStressed == false
+        print("Time Since Last Drink" .. player:getModData().AlcoholicTimeSinceLastDrink)
+        print("Drink Interval" .. sBVars.DrinkInterval)
+
+        if player:getModData().AlcoholicTimeSinceLastDrink > sBVars.DrinkInterval and sBVars.OnlyStressed == false
         then
             TheAlcoholic.AutoDrink:drinkFromFlask()
-        elseif player:getStats():getStress() >= TheAlcoholic.AutoDrink.values.stressThreshold 
+        elseif player:getStats():getStress() >= stressThreshold
         then
             -- AUTOSMOKE CHECK
             -- not sure if autosmoke supports local co-op
