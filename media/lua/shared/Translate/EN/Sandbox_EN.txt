@@ -17,4 +17,7 @@ Sandbox_EN = {
     Sandbox_TheAlcoholicAutoDrink_LootSpawnChance_option4               = "Often",
     Sandbox_TheAlcoholicAutoDrink_LootSpawnChance_option5               = "Very Often",
     Sandbox_TheAlcoholicAutoDrink_WorldSpawnFlasks                      = "World Spawn: Flasks",
+    Sandbox_TheAlcoholicAutoDrink_WorldSpawnFlasks_tooltip              = "Flasks will spawn in the world",
+    Sandbox_TheAlcoholicAutoDrink_StressCheckDT                         = "Stress Check Delta Time",
+    Sandbox_TheAlcoholicAutoDrink_StressCheckDT_tooltip                 = "The amount of time in ms that needs to pass before the mod checks if the player should drink",
 }

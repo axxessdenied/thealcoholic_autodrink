@@ -1,3 +1,5 @@
+TheAlcoholic.AutoDrink = TheAlcoholic.AutoDrink or {}
+
 function TheAlcoholic.AutoDrink.onCreateFlaskWhiskey(items, result, player)
     player:getInventory():AddItem("Base.WhiskeyEmpty")
 end

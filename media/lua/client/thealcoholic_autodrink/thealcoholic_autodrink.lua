@@ -1,12 +1,18 @@
 -- (c) 2024 - axxessdenied [Nick Slusarczyk]
 
+TheAlcoholic.AutoDrink = TheAlcoholic.AutoDrink or {}
+
 TheAlcoholic.AutoDrink.activePlayer = nil
 TheAlcoholic.AutoDrink.supportedMods = {}
 
-local sBVars = TheAlcoholic.AutoDrink.sBVars
+local sBVars = nil
 local stressThreshold = 0
+local stressCheckDT = 10000
+local prevMultipler = 0
+local stressCheckTs = 0
 
-function TheAlcoholic.AutoDrink.onStart()
+function TheAlcoholic.AutoDrink.onLoad()
+    if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
     --AUTOSMOKE SUPPORT
     if AutoSmoke ~= nil and sBVars.AutoSmoke == true
     then
@@ -15,11 +21,13 @@ function TheAlcoholic.AutoDrink.onStart()
         TheAlcoholic.AutoDrink.supportedMods["AutoSmoke"] = false
     end
     stressThreshold = TheAlcoholic.values.stress_per_drink[TheAlcoholic.options.stress_per_drink] - 0.02
+    stressCheckDT = sBVars.StressCheckDT
+    stressCheckTs = getTimestampMs() + stressCheckDT
 end
 
 function TheAlcoholic.AutoDrink.onCreatePlayer(playerNum, character)
     local player = getSpecificPlayer(playerNum)
-
+    if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
     if sBVars.PlayerSpawnFlask == true and player:HasTrait("Alcoholic")
     then
         if ZombRand(sBVars.PlayerSpawnFlaskChance - 1) == 0
@@ -38,16 +46,13 @@ function TheAlcoholic.AutoDrink:canDrink()
         and not player:isSprinting()
 end
 
-local stressCheckDelta = 10000
-local prevMultipler = 0
-local stressCheckTs = 0
 
 function TheAlcoholic.AutoDrink:drinkFromFlask()
     local drink = "Flask"
     local player = self.activePlayer
     local drinkItem = player:getInventory():getFirstTagRecurse(drink)
     if drinkItem ~= nil then
-        local drinkAction = ISDrinkAlcohol:new(player, drinkItem, self.values.percentageConsumed)
+        local drinkAction = ISDrinkAlcohol:new(player, drinkItem, self.sBVars.PercentageConsumed)
         ISTimedActionQueue.add(drinkAction)
     else
         -- todo something else
@@ -57,8 +62,10 @@ end
 function TheAlcoholic.AutoDrink.onStressCheck()
     local multiplier = getGameTime():getTrueMultiplier()
     if getTimestampMs() < stressCheckTs and multiplier == prevMultipler then return end
-    stressCheckTs = getTimestampMs() + stressCheckDelta / multiplier
+    stressCheckTs = getTimestampMs() + stressCheckDT / multiplier
     prevMultipler = multiplier
+
+    if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
 
     -- iterate through each player
     for i=0, getNumActivePlayers() - 1 do
@@ -68,9 +75,6 @@ function TheAlcoholic.AutoDrink.onStressCheck()
         if player:isDead() then break end
         if player:isAsleep() then break end
         if player:HasTrait("Alcoholic") == false then break end
-
-        print("Time Since Last Drink" .. player:getModData().AlcoholicTimeSinceLastDrink)
-        print("Drink Interval" .. sBVars.DrinkInterval)
 
         if player:getModData().AlcoholicTimeSinceLastDrink > sBVars.DrinkInterval and sBVars.OnlyStressed == false
         then
@@ -109,6 +113,6 @@ end
 
 -- EVENTS
 
-Events.OnGameStart.Add(TheAlcoholic.AutoDrink.onStart)
+Events.OnLoad.Add(TheAlcoholic.AutoDrink.onLoad)
 Events.OnCreatePlayer.Add(TheAlcoholic.AutoDrink.onCreatePlayer)
 Events.OnTick.Add(TheAlcoholic.AutoDrink.onStressCheck)

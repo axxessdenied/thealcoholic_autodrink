@@ -13,7 +13,7 @@ module TheAlcoholic {
 		WorldStaticModel 		= 	FlaskGround,
 		Tags 					= 	EmptyPetrol,
 		ReplaceTypes 			= 	PetrolSource FlaskPetrol;WaterSource FlaskWaterFull,
-		Tooltip					=	UI_alcoholic_flask_empty,
+		Tooltip					=	UI_Alcoholic_FlaskEmpty_tooltip,
 	}
 
     item FlaskWaterFull
