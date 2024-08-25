@@ -7,9 +7,7 @@ TheAlcoholic.AutoDrink.supportedMods = {}
 
 local sBVars = nil
 local stressThreshold = 0
-local stressCheckDT = 10000
-local prevMultipler = 0
-local stressCheckTs = 0
+local ticksPerCheck = 0
 
 function TheAlcoholic.AutoDrink.onLoad()
     if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
@@ -20,9 +18,8 @@ function TheAlcoholic.AutoDrink.onLoad()
     else 
         TheAlcoholic.AutoDrink.supportedMods["AutoSmoke"] = false
     end
-    stressThreshold = TheAlcoholic.values.stress_per_drink[TheAlcoholic.options.stress_per_drink] - 0.02
-    stressCheckDT = sBVars.StressCheckDT
-    stressCheckTs = getTimestampMs() + stressCheckDT
+    stressThreshold = TheAlcoholic.values.StressPerDrink - 0.02
+    ticksPerCheck = math.floor(sBVars.StressCheckDeltaTime / 1000) * 60
 end
 
 function TheAlcoholic.AutoDrink.onCreatePlayer(playerNum, character)
@@ -59,11 +56,10 @@ function TheAlcoholic.AutoDrink:drinkFromFlask()
     end
 end
 
-function TheAlcoholic.AutoDrink.onStressCheck()
-    local multiplier = getGameTime():getTrueMultiplier()
-    if getTimestampMs() < stressCheckTs and multiplier == prevMultipler then return end
-    stressCheckTs = getTimestampMs() + stressCheckDT / multiplier
-    prevMultipler = multiplier
+function TheAlcoholic.AutoDrink.onStressCheck(ticks)
+    if math.fmod(ticks, ticksPerCheck) ~= 0 then return end
+
+    print("TheAlcoholic: Stress check")
 
     if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
 

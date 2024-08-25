@@ -68,7 +68,7 @@ option TheAlcoholicAutoDrink.WorldSpawnFlasks = {
     tooltip     = TheAlcoholicAutoDrink_WorldSpawnFlasks_tooltip,
 }
 
-option TheAlcoholicAutoDrink.StressCheckDT = {
+option TheAlcoholicAutoDrink.StressCheckDeltaTime = {
     type        = integer,
     min         = 1000,
     max         = 30000,
