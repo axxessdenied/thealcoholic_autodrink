@@ -6,19 +6,33 @@ module TheAlcoholic {
 
     model Flask
 	{
-		mesh = Flask,
-
+		mesh = WorldItems/FlaskFull,
+        texture = WorldItems/FlaskBlank,
+        scale = 0.3,
 		attachment world
 		{
 			offset = 0.0000 0.0000 0.0000,
 			rotate = 180.0000 27.0000 -89.0000,
 		}
 	}
+
+    model FlaskEmpty
+	{
+		mesh = WorldItems/FlaskEmpty,
+        texture = WorldItems/FlaskBlank,
+        scale = 0.3,
+		attachment world
+		{
+			offset = 0.0000 0.0000 0.0000,
+			rotate = 180.0000 27.0000 -89.0000,
+		}
+	}
+
 	model FlaskGasoline
 	{
-		mesh = Flask,
-		texture = WhiskeyGasoline,
-
+		mesh = WorldItems/FlaskFull,
+        texture = WorldItems/FlaskPetrol,
+        scale = 0.3,
 		attachment world
 		{
 			offset = 0.0000 0.0000 0.0000,
@@ -28,50 +42,22 @@ module TheAlcoholic {
 
     model FlaskGround
     {
-        mesh = WorldItems/Flask,
-        texture = WhiskeyBottle,
+        mesh = WorldItems/FlaskFull,
+        texture = WorldItems/FlaskBlank,
         scale = 0.4,
     }
+
+    model FlaskEmptyGround
+    {
+        mesh = WorldItems/FlaskEmpty,
+        texture = WorldItems/FlaskBlank,
+        scale = 0.4,
+    }
+
 	model FlaskGroundGasoline
     {
-        mesh = WorldItems/Flask,
-        texture = WhiskeyGasoline,
-        scale = 0.4,
-    }
-
-	
-	model MagazineDistiller1_Ground
-    {
-        mesh = WorldItems/Magazine,
-        texture = WorldItems/MagazineDistiller1,
-        scale = 0.4,
-    }
-
-	model MagazineDistiller2_Ground
-    {
-        mesh = WorldItems/Magazine,
-        texture = WorldItems/MagazineDistiller2,
-        scale = 0.4,
-    }
-
-	model MagazineDistiller3_Ground
-    {
-        mesh = WorldItems/Magazine,
-        texture = WorldItems/MagazineDistiller3,
-        scale = 0.4,
-    }
-
-	model MagazineDistiller4_Ground
-    {
-        mesh = WorldItems/Magazine,
-        texture = WorldItems/MagazineDistiller4,
-        scale = 0.4,
-    }
-
-	model MagazineDistiller5_Ground
-    {
-        mesh = WorldItems/Magazine,
-        texture = WorldItems/MagazineDistiller5,
+        mesh = WorldItems/FlaskFull,
+        texture = WorldItems/FlaskPetrol,
         scale = 0.4,
     }
 }

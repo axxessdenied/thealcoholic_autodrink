@@ -8,6 +8,12 @@ TheAlcoholic.AutoDrink.supportedMods = {}
 local sBVars = nil
 local stressThreshold = 0
 local ticksPerCheck = 0
+local playerAction = {
+    false,
+    false,
+    false,
+    false,
+}
 
 function TheAlcoholic.AutoDrink.onLoad()
     if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
@@ -48,8 +54,9 @@ function TheAlcoholic.AutoDrink:drinkFromFlask()
     local drink = "Flask"
     local player = self.activePlayer
     local drinkItem = player:getInventory():getFirstTagRecurse(drink)
+    if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
     if drinkItem ~= nil then
-        local drinkAction = ISDrinkAlcohol:new(player, drinkItem, self.sBVars.PercentageConsumed)
+        local drinkAction = ISDrinkAlcohol:new(player, drinkItem, sBVars.PercentageConsumed)
         ISTimedActionQueue.add(drinkAction)
     else
         -- todo something else
@@ -57,9 +64,7 @@ function TheAlcoholic.AutoDrink:drinkFromFlask()
 end
 
 function TheAlcoholic.AutoDrink.onStressCheck(ticks)
-    if math.fmod(ticks, ticksPerCheck) ~= 0 then return end
-
-    print("TheAlcoholic: Stress check")
+    if math.fmod(ticks, math.floor(ticksPerCheck / getGameTime():getTrueMultiplier()) ) ~= 0 then return end
 
     if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
 
