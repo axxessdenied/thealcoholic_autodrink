@@ -70,9 +70,9 @@ option TheAlcoholicAutoDrink.WorldSpawnFlasks = {
 
 option TheAlcoholicAutoDrink.StressCheckDeltaTime = {
     type        = integer,
-    min         = 1000,
-    max         = 30000,
-    default     = 10000,
+    min         = 1,
+    max         = 60,
+    default     = 10,
     page        = TheAlcoholicAutoDrink,
     translation = TheAlcoholicAutoDrink_StressCheckDT,
     tooltip     = TheAlcoholicAutoDrink_StressCheckDT_tooltip,

@@ -7,13 +7,16 @@ TheAlcoholic.AutoDrink.supportedMods = {}
 
 local sBVars = nil
 local stressThreshold = 0
-local ticksPerCheck = 0
 local playerAction = {
     false,
     false,
     false,
     false,
 }
+local stressTickDelta = 5
+local timeSinceLastStressCheck = 0
+local timeStressAdd = 1
+local hasDrankFromStressThisHour = false
 
 function TheAlcoholic.AutoDrink.onLoad()
     if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
@@ -25,7 +28,19 @@ function TheAlcoholic.AutoDrink.onLoad()
         TheAlcoholic.AutoDrink.supportedMods["AutoSmoke"] = false
     end
     stressThreshold = TheAlcoholic.values.StressPerDrink - 0.02
-    ticksPerCheck = math.floor(sBVars.StressCheckDeltaTime / 1000) * 60
+
+    stressTickDelta = sBVars.StressCheckDeltaTime
+    if stressTickDelta % 60 == 0
+    then
+        timeStressAdd = 60
+        Events.EveryHours.Add(TheAlcoholic.AutoDrink.onStressCheck)
+    elseif stressTickDelta % 10 == 0
+    then
+        timeStressAdd = stressTickDelta / 10
+        Events.EveryTenMinutes.Add(TheAlcoholic.AutoDrink.onStressCheck)
+    else
+        Events.EveryOneMinute.Add(TheAlcoholic.AutoDrink.onStressCheck)
+    end
 end
 
 function TheAlcoholic.AutoDrink.onCreatePlayer(playerNum, character)
@@ -50,9 +65,10 @@ function TheAlcoholic.AutoDrink:canDrink()
 end
 
 
-function TheAlcoholic.AutoDrink:drinkFromFlask()
+function TheAlcoholic.AutoDrink:drinkFromFlask(fromStress)
     local drink = "Flask"
     local player = self.activePlayer
+    if fromStress == true then hasDrankFromStressThisHour = true end
     local drinkItem = player:getInventory():getFirstTagRecurse(drink)
     if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
     if drinkItem ~= nil then
@@ -63,10 +79,20 @@ function TheAlcoholic.AutoDrink:drinkFromFlask()
     end
 end
 
-function TheAlcoholic.AutoDrink.onStressCheck(ticks)
-    if math.fmod(ticks, math.floor(ticksPerCheck / getGameTime():getTrueMultiplier()) ) ~= 0 then return end
+function TheAlcoholic.AutoDrink.onStressCheck()
+    if stressTickDelta % timeSinceLastStressCheck ~= 0
+    then
+        timeSinceLastStressCheck = timeSinceLastStressCheck + timeStressAdd
+        return
+    end
+
+    timeSinceLastStressCheck = stressTickDelta % 60 == 0 and 60 or 0
 
     if sBVars == nil then sBVars = TheAlcoholic.AutoDrink.sBVars end
+
+    if stressThreshold == 0 then
+        stressThreshold = TheAlcoholic.values.StressPerDrink - 0.02
+    end
 
     -- iterate through each player
     for i=0, getNumActivePlayers() - 1 do
@@ -77,11 +103,17 @@ function TheAlcoholic.AutoDrink.onStressCheck(ticks)
         if player:isAsleep() then break end
         if player:HasTrait("Alcoholic") == false then break end
 
-        if player:getModData().AlcoholicTimeSinceLastDrink > sBVars.DrinkInterval and sBVars.OnlyStressed == false
+        if player:getModData().AlcoholicTimeSinceLastDrink > sBVars.DrinkInterval - 1 and sBVars.OnlyStressed == false
         then
+            if TheAlcoholic.values.DebugMode == true
+            then
+                print("Drinking because of time")
+            end
             TheAlcoholic.AutoDrink:drinkFromFlask()
-        elseif player:getStats():getStress() >= stressThreshold
+        elseif player:getStats():getStress() - player:getStats():getStressFromCigarettes() >= stressThreshold
         then
+            print ("Stress: " .. player:getStats():getStress() - player:getStats():getStressFromCigarettes())
+            print ("Threshold: " .. stressThreshold)
             -- AUTOSMOKE CHECK
             -- not sure if autosmoke supports local co-op
             -- we'll only check on the first player
@@ -104,16 +136,23 @@ function TheAlcoholic.AutoDrink.onStressCheck(ticks)
             end
 
             -- AUTODRINK CHECK
-            if TheAlcoholic.AutoDrink:canDrink() then
-                TheAlcoholic.AutoDrink:drinkFromFlask()
+            if TheAlcoholic.AutoDrink:canDrink() and hasDrankFromStressThisHour == false then
+                if TheAlcoholic.values.DebugMode == true
+                then
+                    print("Drinking because of stress")
+                end
+                TheAlcoholic.AutoDrink:drinkFromFlask(true)
             end
         end
     end
 end
 
+function TheAlcoholic.AutoDrink.EveryHours()
+    hasDrankFromStressThisHour = false
+end
 
 -- EVENTS
 
 Events.OnLoad.Add(TheAlcoholic.AutoDrink.onLoad)
 Events.OnCreatePlayer.Add(TheAlcoholic.AutoDrink.onCreatePlayer)
-Events.OnTick.Add(TheAlcoholic.AutoDrink.onStressCheck)
+Events.EveryHours.Add(TheAlcoholic.AutoDrink.EveryHours)

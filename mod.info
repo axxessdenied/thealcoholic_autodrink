@@ -1,6 +1,7 @@
 name=The Alcoholic [ AUTO DRINK ]
 poster=poster.png
 icon=icon.png
+modversion=0.5
 id=thealcoholic_autodrink
 description=Auto-drink alcoholic beverages.
 require=thealcoholic
